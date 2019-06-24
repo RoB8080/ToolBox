@@ -33,8 +33,10 @@
         computed: {
             hex: {
                 get: function () {
-                    this.hexT = this.red.toString(16) + this.green.toString(16) + this.blue.toString(16);
-                    return this.hexT;
+                    let r = this.$data.red.toString(16), g = this.$data.green.toString(16), b = this.$data.blue.toString(16);
+                    let res = r + g + b;
+                    this.hexT = res;
+                    return res;
                 },
                 set: function (val: string) {
                     this.red = parseInt(val.substr(0,2),16);
