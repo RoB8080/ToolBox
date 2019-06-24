@@ -32,14 +32,14 @@
         },
         computed: {
             map: function() {
-                let res = [], l = this.items.length, rem, row;
+                let res:Array<Array<any>> = [], l = this.$data.items.length, rem, row;
                 for(let i = 0; i < l; i++) {
                     rem = i % 4;
                     row = (i - rem) / 4;
                     if(rem === 0) {
                         res[row] = [];
                     }
-                    res[row][rem] = this.items[i];
+                    res[row][rem] = this.$data.items[i];
                 }
                 return res;
             },
