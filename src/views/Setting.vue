@@ -12,12 +12,6 @@
                     <el-color-picker v-model="backgroundColorB" :disabled="!backgroundGradient"></el-color-picker>
                 </setting-row>
             </el-tab-pane>
-            <el-tab-pane label="配置管理">
-
-            </el-tab-pane>
-            <el-tab-pane label="角色管理">
-
-            </el-tab-pane>
             <el-tab-pane label="退回主页">
                 <el-button type="primary" @click="$router.push('/')">返回主页</el-button>
             </el-tab-pane>

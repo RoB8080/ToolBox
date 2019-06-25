@@ -1,6 +1,8 @@
 <template>
     <el-row class="desktop-row">
-        <el-col v-for="item in items" :span="24 / cols">
+        <el-col v-for="(item,index) in items"
+                :span="24 / cols"
+                :key="'i' + index">
             <desktop-item :icon="item.icon"
                           :label="item.label"
                           :route="item.route"

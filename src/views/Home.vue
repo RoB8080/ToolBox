@@ -1,6 +1,9 @@
 <template>
     <div class="home" :style="'--bgColorA: ' + bgColorA + '; --bgColorB: ' + bgColorB + ';'" :class="bgGradient?'gradientBg':'plainBg'">
-        <desktop-row v-for="row in map" :cols="4" :items="row"></desktop-row>
+        <desktop-row v-for="(row, index) in map"
+                     :key="'r' + index"
+                     :cols="4"
+                     :items="row"></desktop-row>
     </div>
 </template>
 
