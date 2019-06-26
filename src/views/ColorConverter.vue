@@ -12,7 +12,7 @@
                                      :min="0"
                                      :max="255"
                                      :precision="0"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="red">
                     </el-input-number>
                     <label>G:</label>
@@ -21,7 +21,7 @@
                                      :min="0"
                                      :max="255"
                                      :precision="0"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="green">
                     </el-input-number>
                     <label>B:</label>
@@ -30,7 +30,7 @@
                                      :min="0"
                                      :max="255"
                                      :precision="0"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="blue">
                     </el-input-number>
                 </div>
@@ -41,7 +41,7 @@
                                      :min="0"
                                      :max="360"
                                      :precision="0"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="hue">
                     </el-input-number>
                     <label>S:</label>
@@ -50,7 +50,7 @@
                                      :min="0"
                                      :max="100"
                                      :precision="2"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="sHSL">
                     </el-input-number>
                     <label>L:</label>
@@ -59,7 +59,7 @@
                                      :min="0"
                                      :max="100"
                                      :precision="2"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="lHSL">
                     </el-input-number>
                 </div>
@@ -70,7 +70,7 @@
                                      :min="0"
                                      :max="360"
                                      :precision="0"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="hue">
                     </el-input-number>
                     <label>S:</label>
@@ -79,7 +79,7 @@
                                      :min="0"
                                      :max="100"
                                      :precision="2"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="sHSV">
                     </el-input-number>
                     <label>V:</label>
@@ -88,7 +88,7 @@
                                      :min="0"
                                      :max="100"
                                      :precision="2"
-                                     :style="{width: '55px'}"
+                                     :style="{width: '57px'}"
                                      v-model="vHSV">
                     </el-input-number>
                 </div>
@@ -105,14 +105,13 @@
             </el-row>
 
         </div>
-        <navi-popup :animation-duration="500"></navi-popup>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from "vue";
     import ColorConvert from "@/util/colorConvert.ts";
-    import NaviPopup from "@/components/NaviPopup.vue"; // @ is an alias to /src
+    import NaviPopup from "@/components/NaviPopup.vue";// @ is an alias to /src
 
     export default Vue.extend({
         components: {
@@ -138,7 +137,7 @@
                     return this.$data.color.red;
                 },
                 set: function (val: number) {
-                    this.color.red = val;
+                    this.$data.color.red = val;
                 }
             },
             green: {
@@ -146,7 +145,7 @@
                     return this.$data.color.green;
                 },
                 set: function (val: number) {
-                    this.color.green = val;
+                    this.$data.color.green = val;
                 }
             },
             blue: {
@@ -154,7 +153,7 @@
                     return this.$data.color.blue;
                 },
                 set: function (val: number) {
-                    this.color.blue = val;
+                    this.$data.color.blue = val;
                 }
             },
             hex: {
@@ -163,7 +162,7 @@
                     return this.$data.color.hex;
                 },
                 set: function (val: string) {
-                    this.color.hex = val;
+                    this.$data.color.hex = val;
                 }
             },
             hue: {
@@ -171,7 +170,7 @@
                     return this.$data.color.hue;
                 },
                 set: function(val: number) {
-                    this.color.hue = val;
+                    this.$data.color.hue = val;
                 }
             },
             sHSL: {
@@ -179,7 +178,7 @@
                     return this.$data.color.sHSL;
                 },
                 set: function (val: number) {
-                    this.color.sHSL = val;
+                    this.$data.color.sHSL = val;
                 }
             },
             lHSL: {
@@ -187,7 +186,7 @@
                     return this.$data.color.lHSL;
                 },
                 set: function (val: number) {
-                    this.color.lHSL = val;
+                    this.$data.color.lHSL = val;
                 }
             },
             sHSV: {
@@ -195,7 +194,7 @@
                     return this.$data.color.sHSV;
                 },
                 set: function (val: number) {
-                    this.color.sHSV = val;
+                    this.$data.color.sHSV = val;
                 }
             },
             vHSV: {
@@ -203,14 +202,14 @@
                     return this.$data.color.vHSV;
                 },
                 set: function (val: number) {
-                    this.color.vHSV = val;
+                    this.$data.color.vHSV = val;
                 }
             },
         },
         watch: {
             hexT(val) {
                 if(/^[0-9a-f]{6}$/i.test(val)) {
-                    this.color.hex = val;
+                    this.$data.color.hex = val;
                 }
             }
         }
@@ -228,12 +227,15 @@
         top: 50%;
         transform: translate(-50%, -50%);
 
-        padding: 10px;
+        padding: 10px 7px;
 
         border: 1px solid #DCDFE6;
     }
     .color-panel > * {
-        margin: 10px auto;
+        margin-bottom: 10px;
+    }
+    .color-panel > *:last-child {
+        margin-bottom: 0;
     }
     .color-display {
         height: 35px;

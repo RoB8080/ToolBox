@@ -3,12 +3,19 @@
         <transition :name="transitionName">
             <router-view/>
         </transition>
+        <float-button icon="el-icon-s-home" :radius="28" :icon-size="22" @click="$router.push('/')" style="z-index: 10;"></float-button>
     </div>
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from "vue";
+    import FloatButton from "@/components/FloatButton.vue"
+
+    export default Vue.extend({
         name: "app",
+        components: {
+            FloatButton
+        },
         data: function() {
             return {
                 transitionName: ""
@@ -21,7 +28,7 @@
                 this.transitionName = (to.path === "/" ? 'close': toDepth < fromDepth ? 'close' : 'open' );
             }
         }
-    }
+    })
 
 </script>
 
@@ -55,21 +62,21 @@
     }
 
     .open-enter-active {
-        animation: open-app 0.5s;
+        animation: open-app 0.4s;
         position: absolute;
         height: 100%;
         width: 100%;
         z-index: 1;
     }
     .close-leave-active {
-        animation: open-app 0.5s reverse;
+        animation: open-app 0.4s reverse;
         position: absolute;
         height: 100%;
         width: 100%;
         z-index: 1;
     }
     .open-leave-active, .close-enter-active {
-        transition: opacity 0.5s;
+        transition: opacity 0.4s;
         position: absolute;
         height: 100%;
         width: 100%;

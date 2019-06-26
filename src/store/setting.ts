@@ -5,7 +5,8 @@ export default {
             gradient: true,
             colorA: "#98aab3",
             colorB: "#e2ebf0"
-        }
+        },
+
     },
     mutations: {
         backgroundGradient(state: any, enable: boolean) {
