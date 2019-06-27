@@ -3,7 +3,8 @@
         <el-col v-for="(item,index) in items"
                 :span="24 / cols"
                 :key="'i' + index">
-            <desktop-item :icon="item.icon"
+            <desktop-item :size="size"
+                          :icon="item.icon"
                           :label="item.label"
                           :route="item.route"
                           :background-color="item.backgroundColor"
@@ -14,8 +15,9 @@
 </template>
 
 <script lang="ts">
+    import Vue from "vue";
     import DesktopItem from "@/components/DesktopItem.vue";
-    export default {
+    export default Vue.extend({
         name: "DesktopRow",
         components: {DesktopItem},
         props: {
@@ -26,9 +28,13 @@
             items: {
                 type: Array,
                 default: []
-            }
+            },
+            size: {
+                type: String,
+                default: "large"
+            },
         }
-    }
+    })
 </script>
 
 <style scoped>

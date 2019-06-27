@@ -30,6 +30,17 @@
                 const fromDepth = from.path.split('/').length;
                 this.transitionName = (to.path === "/" ? 'close': toDepth < fromDepth ? 'close' : 'open' );
             }
+        },
+        methods: {
+            resizeHandle (): void {
+                this.screenSize = document.body.clientWidth < 768 ? "small" : "large";
+            }
+        },
+        mounted (): void {
+            window.addEventListener("resize", this.resizeHandle);
+        },
+        beforeDestroy(): void {
+            window.removeEventListener("resize", this.resizeHandle);
         }
     })
 

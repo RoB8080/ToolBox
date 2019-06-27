@@ -94,14 +94,12 @@
                 this.$parent.$el.removeEventListener('mousemove',this.mouseMove);
                 this.$parent.$el.removeEventListener('mouseup',this.mouseUp);
                 this.$parent.$el.removeEventListener('mouseleave',this.mouseLeave);
-                this.$parent.$el.removeEventListener('touchmove',this.mouseMove);
-                this.$parent.$el.removeEventListener('touchend',this.mouseUp);
             },
 
             touchStart(event: TouchEvent) {
                 event.preventDefault();
                 let scope = this;
-
+                //@ts-ignore
                 this.$parent.$el.addEventListener('touchmove',this.touchMove);
                 this.$parent.$el.addEventListener('touchend',this.touchEnd);
 
@@ -116,10 +114,11 @@
                     y = event.touches[0].clientY - offset;
                 x = (x < this.$parent.$el.clientWidth - 2 * offset) ? (x > 0) ? x : 0 : (this.$parent.$el.clientWidth - 2 * offset);
                 y = (y < this.$parent.$el.clientHeight - 2 * offset) ? (y > 0) ? y : 0 : (this.$parent.$el.clientHeight - 2 * offset);
-                this.$data.position.x = x;
-                this.$data.position.y = y;
+                this.position.x = x;
+                this.position.y = y;
             },
             touchEnd() {
+                //@ts-ignore
                 this.$parent.$el.removeEventListener('touchmove',this.touchMove);
                 this.$parent.$el.removeEventListener('touchend',this.touchEnd);
 
@@ -128,7 +127,18 @@
                 }
             },
 
+            resizeHandle() {
+                let x = this.position.x, y = this.position.y, offset = this.$props.radius;
+                this.position.x = (x < this.$parent.$el.clientWidth - 2 * offset) ? (x > 0) ? x : 0 : (this.$parent.$el.clientWidth - 2 * offset);
+                this.position.y = (y < this.$parent.$el.clientHeight - 2 * offset) ? (y > 0) ? y : 0 : (this.$parent.$el.clientHeight - 2 * offset);
+            }
         },
+        mounted(): void {
+            window.addEventListener('resize', this.resizeHandle);
+        },
+        beforeDestroy(): void {
+            window.removeEventListener('resize', this.resizeHandle);
+        }
     })
 </script>
 

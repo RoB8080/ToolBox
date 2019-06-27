@@ -135,11 +135,9 @@
 <script lang="ts">
     import Vue from "vue";
     import ColorConvert from "@/util/colorConvert.ts";
-    import NaviPopup from "@/components/NaviPopup.vue";// @ is an alias to /src
 
     export default Vue.extend({
         components: {
-            NaviPopup
         },
         props: {
             responsive: {
@@ -244,12 +242,18 @@
                 }
             }
         },
-        mounted () {
-            let scope = this;
-            window.onresize = function () {
-                scope.screenSize = document.body.clientWidth < 768 ? "small" : "large";
+        methods: {
+            resizeHandle (): void {
+                this.screenSize = document.body.clientWidth < 768 ? "small" : "large";
             }
+        },
+        mounted (): void {
+            window.addEventListener("resize", this.resizeHandle);
+        },
+        beforeDestroy(): void {
+            window.removeEventListener("resize", this.resizeHandle);
         }
+
     })
 </script>
 
