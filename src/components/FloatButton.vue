@@ -1,7 +1,8 @@
 <template>
     <div class="float-button"
          :style="outerStyle"
-         @mousedown="mouseDown($event)">
+         @mousedown="mouseDown($event)"
+         @touchstart="touchStart($event)">
         <div class="float-button-inner" :style="innerStyle">
             <i :class="icon"></i>
         </div>
@@ -64,7 +65,6 @@
                 this.$parent.$el.addEventListener('mouseup',this.mouseUp);
                 this.$parent.$el.addEventListener('mouseleave',this.mouseLeave);
 
-                this.$data.isMouseDown = true;
                 this.$data.isClickGap = true;
                 window.setTimeout(function() {
                     scope.$data.isClickGap = false
@@ -94,7 +94,40 @@
                 this.$parent.$el.removeEventListener('mousemove',this.mouseMove);
                 this.$parent.$el.removeEventListener('mouseup',this.mouseUp);
                 this.$parent.$el.removeEventListener('mouseleave',this.mouseLeave);
-            }
+                this.$parent.$el.removeEventListener('touchmove',this.mouseMove);
+                this.$parent.$el.removeEventListener('touchend',this.mouseUp);
+            },
+
+            touchStart(event: TouchEvent) {
+                event.preventDefault();
+                let scope = this;
+
+                this.$parent.$el.addEventListener('touchmove',this.touchMove);
+                this.$parent.$el.addEventListener('touchend',this.touchEnd);
+
+                this.$data.isClickGap = true;
+                window.setTimeout(function() {
+                    scope.$data.isClickGap = false
+                },250);
+            },
+            touchMove(event: TouchEvent) {
+                let offset = this.$props.radius,
+                    x = event.touches[0].clientX - offset,
+                    y = event.touches[0].clientY - offset;
+                x = (x < this.$parent.$el.clientWidth - 2 * offset) ? (x > 0) ? x : 0 : (this.$parent.$el.clientWidth - 2 * offset);
+                y = (y < this.$parent.$el.clientHeight - 2 * offset) ? (y > 0) ? y : 0 : (this.$parent.$el.clientHeight - 2 * offset);
+                this.$data.position.x = x;
+                this.$data.position.y = y;
+            },
+            touchEnd() {
+                this.$parent.$el.removeEventListener('touchmove',this.touchMove);
+                this.$parent.$el.removeEventListener('touchend',this.touchEnd);
+
+                if(this.$data.isClickGap) {
+                    this.$emit('click');
+                }
+            },
+
         },
     })
 </script>
