@@ -159,7 +159,7 @@
                         {label: "HSV", value: 2},
                     ]
                 },
-                screenSize: document.body.clientWidth < 768 ? "small" : "large";
+                screenSize: document.body.clientWidth < 768 ? "small" : "large"
             }
         },
         computed: {
