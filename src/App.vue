@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <transition :name="transitionName">
-            <router-view/>
+            <router-view :responsive="true"></router-view>
         </transition>
         <float-button icon="el-icon-s-home" :radius="28" :icon-size="22" @click="$router.push('/')" style="z-index: 10;"></float-button>
     </div>
@@ -18,8 +18,11 @@
         },
         data: function() {
             return {
-                transitionName: ""
+                transitionName: "",
+                screenSize: "large"
             }
+        },
+        computed: {
         },
         watch: {
             '$route' (to, from) {
