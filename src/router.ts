@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './views/Desktop.vue'
 import ColorConverter from './views/ColorConverter.vue'
 import SalaryCalculator from './views/SalaryCalculator.vue'
 import TodoList from './views/TodoList.vue'

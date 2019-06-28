@@ -1,11 +1,13 @@
 <template>
-    <div class="home" :style="'--bgColorA: ' + bgColorA + '; --bgColorB: ' + bgColorB + ';'" :class="bgGradient?'gradientBg':'plainBg'">
-        <desktop-row v-for="(row, index) in map"
-                     :key="'r' + index"
-                     :cols="4"
-                     :items="row"
-                     :size="screenSize"></desktop-row>
-    </div>
+    <keep-alive>
+        <div class="desktop" :style="'--bgColorA: ' + bgColorA + '; --bgColorB: ' + bgColorB + ';'" :class="bgGradient?'gradientBg':'plainBg'">
+            <desktop-row v-for="(row, index) in map"
+                         :key="'r' + index"
+                         :cols="4"
+                         :items="row"
+                         :size="screenSize"></desktop-row>
+        </div>
+    </keep-alive>
 </template>
 
 <script lang="ts">
@@ -17,7 +19,7 @@
     // @ is an alias to /src
 
     export default Vue.extend({
-        name: "Home",
+        name: "Desktop",
         components: {
             DesktopRow,
             NaviPopup,
@@ -64,8 +66,11 @@
                 this.screenSize = document.body.clientWidth < 768 ? "small" : "large";
             }
         },
-        mounted (): void {
+        created (): void {
             window.addEventListener("resize", this.resizeHandle);
+        },
+        mounted (): void {
+            this.resizeHandle();
         },
         beforeDestroy(): void {
             window.removeEventListener("resize", this.resizeHandle);
@@ -74,17 +79,17 @@
 </script>
 
 <style scoped>
-    .home {
+    .desktop {
         height: 100%;
     }
     .slide-leave-active{
         transition: all 1s;
 
     }
-    .home.plainBg {
+    .desktop.plainBg {
         background-color: var(--bgColorA);
     }
-    .home.gradientBg {
+    .desktop.gradientBg {
         background-image: linear-gradient(to top, var(--bgColorA) 0%, var(--bgColorB) 100%);
     }
     .el-row {

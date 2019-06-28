@@ -1,5 +1,5 @@
 <template>
-    <div class="desktop-item" @click="click" :class="size">
+    <div class="desktop-item" @mousedown="mouseDown($event)" @touchstart="touchStart($event)" :class="size +' '+ (isDragging ? 'dragging': '')">
         <div class="desktop-icon"  :style="{backgroundColor: backgroundColor}">
             <i :class="icon" :style="{color: iconColor}"></i>
         </div>
@@ -7,8 +7,10 @@
     </div>
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from "vue";
+
+    export default Vue.extend({
         name: "DesktopItem",
         props: {
             size: {
@@ -36,12 +38,63 @@
                 default: "#666677"
             }
         },
+        data () {
+            return {
+                isDragging: false,
+            }
+        },
         methods: {
-            click () {
+            mouseDown (event: MouseEvent): void {
+                event.preventDefault();
+                let scope = this;
+
+                let timeoutID: number = window.setTimeout(function() {
+                    scope.isDragging = true;
+                },250);
+                let handler = this.getEventEndHandler(timeoutID, false);
+                this.$parent.$el.addEventListener('mouseup',handler);
+                this.$parent.$el.addEventListener('mouseleave',handler);
+            },
+            touchStart (event: MouseEvent): void {
+                event.preventDefault();
+                let scope = this;
+
+                let timeoutID: number = window.setTimeout(function() {
+                    scope.isDragging = true;
+                },250);
+                let handler = this.getEventEndHandler(timeoutID, true);
+                this.$parent.$el.addEventListener('touchend',handler);
+            },
+            getEventEndHandler (timeoutID: number, touch: boolean): EventListener {
+                let eventEndHandler: EventListener, scope = this;
+                if (touch)
+                    eventEndHandler = function(event: TouchEvent|Event) {
+                        window.clearTimeout(timeoutID);
+                        scope.$parent.$el.removeEventListener('touchend',eventEndHandler);
+                        if(scope.$data.isDragging) {
+                            scope.isDragging = false;
+                        } else {
+                            scope.click();
+                        }
+                    };
+                else
+                    eventEndHandler = function(event: MouseEvent|Event) {
+                        window.clearTimeout(timeoutID);
+                        scope.$parent.$el.removeEventListener('mouseup',eventEndHandler);
+                        scope.$parent.$el.removeEventListener('mouseleave',eventEndHandler);
+                        if(scope.$data.isDragging) {
+                            scope.isDragging = false;
+                        } else {
+                            scope.click();
+                        }
+                    };
+                return eventEndHandler;
+            },
+            click (): void {
                 if(this.route !== "") this.$router.push(this.route);
             }
         }
-    }
+    })
 </script>
 
 <style lang="sass" scoped>
@@ -49,6 +102,8 @@
         display: inline-block
         cursor: default
         filter: drop-shadow(2px 2px 5px rgba(100,100,100,0.25))
+        &.dragging
+            transform: scale(1.1)
         &.large
             & > .desktop-icon
                 width: 80px
