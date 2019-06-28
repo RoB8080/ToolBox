@@ -19,38 +19,41 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+    import Vue from "vue"
     import SettingRow from "@/components/SettingRow";
-    export default {
-        name: "Setting",
-        components: {SettingRow},
+
+    export default Vue.extend({
+        components: {
+            SettingRow
+        },
         computed: {
             backgroundGradient: {
-                get() {
+                get(): boolean {
                     return this.$store.state.setting.background.gradient;
                 },
-                set(val) {
+                set(val: boolean) {
                     this.$store.dispatch("setting/backgroundGradient", val);
                 }
             },
             backgroundColorA: {
-                get() {
+                get(): string {
                     return this.$store.state.setting.background.colorA;
                 },
-                set(val) {
+                set(val: string) {
                     this.$store.dispatch("setting/backgroundColorA", val);
                 }
             },
             backgroundColorB: {
-                get() {
+                get(): string {
                     return this.$store.state.setting.background.colorB;
                 },
-                set(val) {
+                set(val: string) {
                     this.$store.dispatch("setting/backgroundColorB", val);
                 }
             }
         }
-    }
+    })
 </script>
 
 <style scoped>

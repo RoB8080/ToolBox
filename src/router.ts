@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Desktop.vue'
-import ColorConverter from './views/ColorConverter.vue'
-import SalaryCalculator from './views/SalaryCalculator.vue'
-import TodoList from './views/TodoList.vue'
-import Setting from './views/Setting.vue'
+import Desktop from './views/Desktop.vue'
 
 Vue.use(Router);
 
@@ -14,8 +10,13 @@ export default new Router({
     routes: [
         {
             path: '',
-            name: 'home',
-            component: Home
+            name: 'Desktop',
+            component: Desktop
+        },
+        {
+            path: '/setting',
+            name: 'setting',
+            component: () => import(/* webpackChunkName: "setting" */ './views/Setting.vue')
         },
         {
             path: '/about',
@@ -28,22 +29,12 @@ export default new Router({
         {
             path: '/salary-calculator',
             name: 'salary-calculator',
-            component: SalaryCalculator
+            component: () => import(/* webpackChunkName: "salary-calculator" */ './views/SalaryCalculator.vue')
         },
         {
             path: '/color-converter',
             name: 'color-converter',
-            component: ColorConverter
-        },
-        {
-            path: '/todo-list',
-            name: 'todo-list',
-            component: TodoList
-        },
-        {
-            path: '/setting',
-            name: 'setting',
-            component: Setting
-        },
+            component: () => import(/* webpackChunkName: "color-converter" */ './views/ColorConverter.vue')
+        }
     ]
 })
