@@ -21,7 +21,7 @@
 
 <script lang="ts">
     import Vue from "vue"
-    import SettingRow from "@/components/SettingRow";
+    import SettingRow from "@/components/SettingRow.vue";
 
     export default Vue.extend({
         components: {

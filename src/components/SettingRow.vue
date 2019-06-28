@@ -5,9 +5,10 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: "SettingRow",
+<script lang="ts">
+    import Vue from "vue";
+
+    export default Vue.extend({
         props: {
             label: {
                 type: String,
@@ -18,7 +19,7 @@
                 default: "medium"
             }
         },
-    }
+    })
 </script>
 
 <style scoped lang="sass">
