@@ -2,7 +2,8 @@
     <div class="float-button"
          :style="outerStyle"
          @mousedown="mouseDown($event)"
-         @touchstart="touchStart($event)">
+         @touchstart="touchStart($event)"
+         v-show="visible">
         <div class="float-button-inner" :style="innerStyle">
             <i :class="icon"></i>
         </div>
@@ -28,14 +29,15 @@
                 default: "el-icon-menu"
             },
         },
-        data: function() {
+        data () {
             return {
                 isMouseDown: false,
                 isClickGap: false,
                 position: {
                     x: 0,
                     y: 0
-                }
+                },
+                visible: false
             }
         },
         computed: {
@@ -131,6 +133,11 @@
                 let x = this.position.x, y = this.position.y, offset = this.$props.radius;
                 this.position.x = (x < this.$parent.$el.clientWidth - 2 * offset) ? (x > 0) ? x : 0 : (this.$parent.$el.clientWidth - 2 * offset);
                 this.position.y = (y < this.$parent.$el.clientHeight - 2 * offset) ? (y > 0) ? y : 0 : (this.$parent.$el.clientHeight - 2 * offset);
+            }
+        },
+        watch: {
+            '$route' (to) {
+                this.visible = to.path !== "/";
             }
         },
         mounted(): void {

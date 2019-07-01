@@ -35,6 +35,16 @@ export default new Router({
             path: '/color-converter',
             name: 'color-converter',
             component: () => import(/* webpackChunkName: "color-converter" */ './views/ColorConverter.vue')
+        },
+        {
+            path: '/map',
+            name: 'map',
+            component: () => import(/* webpackChunkName: "map" */ './views/Map.vue')
+        },
+        {
+            path: '/test',
+            name: 'test',
+            component: () => import(/* webpackChunkName: "test" */ './views/Test.vue')
         }
     ]
 })
