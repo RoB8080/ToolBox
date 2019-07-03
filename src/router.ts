@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Desktop from './views/Desktop.vue'
+import Desktop from './views/Desktop/Desktop.vue'
 
 Vue.use(Router);
 

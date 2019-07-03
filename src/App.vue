@@ -77,21 +77,21 @@
 
     .open-enter-active {
         animation: open-app 0.4s;
-        position: absolute;
+        position: absolute !important;
         height: 100%;
         width: 100%;
         z-index: 1;
     }
     .close-leave-active {
         animation: open-app 0.4s reverse;
-        position: absolute;
+        position: absolute !important;
         height: 100%;
         width: 100%;
         z-index: 1;
     }
     .open-leave-active, .close-enter-active {
         transition: opacity 0.4s;
-        position: absolute;
+        position: absolute !important;
         height: 100%;
         width: 100%;
         z-index: -1;

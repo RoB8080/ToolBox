@@ -1,5 +1,5 @@
 <template>
-    <div class="desktop-item" @mousedown="mouseDown($event)" @touchstart="touchStart($event)" :class="size +' '+ (isDragging ? 'dragging': '')">
+    <div class="desktop-item" @mousedown="mouseDown($event)" @touchstart="touchStart($event)" :class="size">
         <div class="desktop-icon"  :style="{backgroundColor: backgroundColor}">
             <i :class="icon" :style="{color: iconColor}"></i>
         </div>
@@ -17,93 +17,102 @@
                 type: String,
                 default: "large"
             },
-            icon: {
-                type: String,
-                default: ""
+            item: {
+                type: Object,
+                default:() => {return{
+                    icon: "",
+                    label: "",
+                    route: "",
+                    iconColor: "#ffffee",
+                    backgroundColor: "#666677",
+                }}
             },
-            label: {
-                type: String,
-                default: ""
-            },
-            route: {
-                type: String,
-                default: ""
-            },
-            iconColor: {
-                type: String,
-                default: "#ffffee"
-            },
-            backgroundColor: {
-                type: String,
-                default: "#666677"
-            }
         },
         data () {
             return {
-                isDragging: false,
+                icon: "",
+                label: "",
+                route: "",
+                iconColor: "#ffffee",
+                backgroundColor: "#666677",
+                isClickGap: false,
             }
         },
         methods: {
-            mouseDown (event: MouseEvent): void {
-                event.preventDefault();
+            mouseDown (e: MouseEvent): void {
+                e.preventDefault();
                 let scope = this;
-
+                this.isClickGap = true;
                 let timeoutID: number = window.setTimeout(function() {
-                    scope.isDragging = true;
-                },250);
+                    scope.isClickGap = false;
+                    scope.$emit("adjust", e);
+                },1000);
                 let handler = this.getEventEndHandler(timeoutID, false);
                 this.$parent.$el.addEventListener('mouseup',handler);
                 this.$parent.$el.addEventListener('mouseleave',handler);
             },
-            touchStart (event: MouseEvent): void {
-                event.preventDefault();
+            touchStart (e: TouchEvent): void {
+                e.preventDefault();
                 let scope = this;
-
+                this.isClickGap = true;
                 let timeoutID: number = window.setTimeout(function() {
-                    scope.isDragging = true;
-                },250);
+                    scope.isClickGap = false;
+                    scope.$emit("adjust", e);
+                },1000);
                 let handler = this.getEventEndHandler(timeoutID, true);
                 this.$parent.$el.addEventListener('touchend',handler);
             },
             getEventEndHandler (timeoutID: number, touch: boolean): EventListener {
                 let eventEndHandler: EventListener, scope = this;
                 if (touch)
-                    eventEndHandler = function(event: TouchEvent|Event) {
+                    eventEndHandler = function() {
                         window.clearTimeout(timeoutID);
                         scope.$parent.$el.removeEventListener('touchend',eventEndHandler);
-                        if(scope.$data.isDragging) {
-                            scope.isDragging = false;
-                        } else {
+                        if(scope.$data.isClickGap) {
                             scope.click();
                         }
+                        scope.isClickGap = true;
                     };
                 else
-                    eventEndHandler = function(event: MouseEvent|Event) {
+                    eventEndHandler = function() {
                         window.clearTimeout(timeoutID);
                         scope.$parent.$el.removeEventListener('mouseup',eventEndHandler);
                         scope.$parent.$el.removeEventListener('mouseleave',eventEndHandler);
-                        if(scope.$data.isDragging) {
-                            scope.isDragging = false;
-                        } else {
+                        if(scope.$data.isClickGap) {
                             scope.click();
                         }
+                        scope.isClickGap = true;
                     };
                 return eventEndHandler;
             },
             click (): void {
                 if(this.route !== "") this.$router.push(this.route);
             }
+        },
+        mounted () {
+            if(this.item.icon) {
+                this.icon = this.item.icon;
+            }
+            if(this.item.label) {
+                this.label = this.item.label;
+            }
+            if(this.item.route) {
+                this.route = this.item.route;
+            }
+            if(this.item.iconColor) {
+                this.iconColor = this.item.iconColor;
+            }
+            if(this.item.backgroundColor) {
+                this.backgroundColor = this.item.backgroundColor;
+            }
         }
     })
 </script>
 
 <style lang="sass" scoped>
-    .desktop-item 
-        display: inline-block
+    .desktop-item
         cursor: default
         filter: drop-shadow(2px 2px 5px rgba(100,100,100,0.25))
-        &.dragging
-            transform: scale(1.1)
         &.large
             & > .desktop-icon
                 width: 80px
