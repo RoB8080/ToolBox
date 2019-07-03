@@ -83,10 +83,15 @@
             startAdjust (index: number): void {
                 this.adjusted = index;
                 this.adjusting = true;
+                // @ts-ignore
                 this.$el.addEventListener("mousemove",this.onMove);
+                // @ts-ignore
                 this.$el.addEventListener("touchmove",this.onMove);
+                // @ts-ignore
                 this.$el.addEventListener("mouseleave",this.endAdjust);
+                // @ts-ignore
                 this.$el.addEventListener("mouseup",this.endAdjust);
+                // @ts-ignore
                 this.$el.addEventListener("touchend",this.endAdjust);
             },
             onMove (event: MouseEvent | TouchEvent): void {
@@ -101,10 +106,15 @@
             endAdjust(): void {
                 this.adjusting = false;
                 this.adjusted = -1;
+                // @ts-ignore
                 this.$el.removeEventListener("mousemove",this.onMove);
+                // @ts-ignore
                 this.$el.removeEventListener("touchmove",this.onMove);
+                // @ts-ignore
                 this.$el.removeEventListener("mouseleave",this.endAdjust);
+                // @ts-ignore
                 this.$el.removeEventListener("mouseup",this.endAdjust);
+                // @ts-ignore
                 this.$el.removeEventListener("touchend",this.endAdjust);
             },
             modifyVirtualPos(event: MouseEvent | TouchEvent) : void {
@@ -122,8 +132,10 @@
         },
         mounted (): void {
             this.resizeHandle();
+            // @ts-ignore
             this.$el.addEventListener("touchstart",this.modifyVirtualPos);
-            this.$el.addEventListener("mousedown",this.modifyVirtualPos)
+            // @ts-ignore
+            this.$el.addEventListener("mousedown",this.modifyVirtualPos);
         },
         beforeDestroy(): void {
             window.removeEventListener("resize", this.resizeHandle);
